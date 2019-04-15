@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+{% load static %}
+
+
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        <!-- Bootstrap CSS -->
+
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+        <link rel="stylesheet" href="{% static 'movie_app/style.css' %}" />
+
+        <title>My Movies</title>
+	</head>
+
+    <body>
+    	<div class="wrapper">
+            <nav class="nav">
+                <div class="container">
+                    <div class="nav__menu">
+                        <a href="/" class="nav__header">Omda Movies</a>
+                        <div class="col-md-5 pull-right">
+                            <form action="" class="form-inline" name="search">
+                            <input type="text" name="username" class="form-control" value="{{request.GET.username}}">   
+                            <input type="submit" class="btn " style="background:#FCAB07;" value="Search"> 
+                            </form>
+                        </div>
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-create">Create</button>
+                    </div>
+                </div>
+            </nav>
+            <section class="result">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <h2>{{ message }}</h2>
+                            </div>
+                            
+                        {% endfor %}
+                    {% endif %}
+
+
+                    <div class="movies">
+                        {% for movie in search_result %}
+                        <div class="movies__item">
+                            <button type="button" class="movies__item-expander hide" data-toggle="modal" data-target="#modal-{{movie.id}}">View Details</button>
+                            <i class="movies__item-star fa fa-star hide"></i>
+                            <p class="movies__item-rating hide">{{ movie.fields.Rating }}/10</p>
+                            <img class="movies__item-image" src="{{ movie.fields.Pictures.0.url }}" alt="" />
+                            <div class="movies__item-title">
+                                <p>{{ movie.fields.Name }}</p>
+                            </div>
+                        </div>
+                        {% include 'movie_app/detail.html' %}
+                        {% include 'movie_app/edit.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+    
+        </div>
+
+        
+        {% include 'movie_app/create_modal.html' %}
+
+
+
+
+
+
+
+
+
+ <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="{% static 'movie_app/app.js' %}"></script>
+    </body>
+</html>

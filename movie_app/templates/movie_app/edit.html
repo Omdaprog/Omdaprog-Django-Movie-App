@@ -1,0 +1,38 @@
+<div class="modal fade" id="edit-modal-{{ movie.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalName">{{ movie.fields.Name }}</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'edit' movie_id=movie.id %}" method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="form_group">
+                        <label for="editName">Name</label>
+                        <input type="text" class="form-control" name="name" id="editName" placeholder="New Name" value="{{movie.fields.Name}}" required>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="editPicture">Picture</label>
+                        <input type="text" class="form-control" name="url" id="editPicture" placeholder="New Picture" value="{{movie.fields.Pictures.0.url}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieRating">Rating</label>
+                        <input type="number" class="form-control" id="movieRating" placeholder="1-10" name="rating" min="1" max="10" value="{{movie.fields.Rating}}" required>
+                    </div> 
+
+                    <div class="form_group">
+                        <label for="movieNote">Note</label>
+                        <textarea name="notes" id="movieNote" class="form-control" placeholder="New Note" value="{{movie.fields.note}}" ></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn2" style="background:#FCAB07;">Update</button>
+                    <a href="{% url 'delete' movie_id=movie.id %}" class="btn2 btn btn-danger">Delete</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
