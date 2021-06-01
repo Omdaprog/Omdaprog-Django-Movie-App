@@ -16,7 +16,7 @@ pylint==2.1.1
 pytz==2018.7
 requests==2.21.0
 six==1.11.0
-urllib3==1.24.1
+urllib3==1.26.5
 whitenoise==4.1.2
 wincertstore==0.2
 wrapt==1.10.11
